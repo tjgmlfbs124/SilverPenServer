@@ -58,7 +58,7 @@ module.exports = function(app, connection)
 		console.log("request '/signIn' from client. request info : " + id + "(" + name + ")");
 		var query = "SELECT * FROM users WHERE user_id = " + id + " AND user_name = " + name +  ";";
 		excuteQuery(query, function result(result){
-			insertActionLog(id, "SIGNIN");
+			insertActionLog(id, "LOGIN");
 			res.send(result);
 		});
 	});
@@ -105,6 +105,11 @@ module.exports = function(app, connection)
 	});
 
 	app.get('/getUserAction', function(req,res){ // #1005 사용자 활동로그 조회
+		var data = {
+			last_100 : null,
+			last_missionList : null,
+			contentCount : null
+		}
 		var name = req.query.user_name;
 		var id = "'" + req.query.user_id + "'";
 		var query = "SELECT date_format(date, '%Y-%m-%d') group_date, COUNT(*) as count FROM userlog WHERE date >= date_add(now(), interval -100 day) GROUP BY group_date  ORDER BY group_date DESC";
@@ -112,12 +117,20 @@ module.exports = function(app, connection)
 		console.log("request '/getUserAction' from client. request info : " + id + "(" + name + ")");
 
 		excuteQuery(query, function result(result){
-			var query = "SELECT date_format(date, '%Y-%m-%d') group_date, COUNT(*) as count FROM userlog WHERE date >= date_add(now(), interval -100 day) GROUP BY group_date  ORDER BY group_date DESC";
+			data.last_100 = result;
+			query = "SELECT user_action, COUNT(*) AS count FROM userlog WHERE user_id=" + id + " GROUP BY user_action;";
+
 			excuteQuery(query, function result(result){
-				// console.log("result : " + result);
-				res.send(result);
+				data.contentCount = result;
+				query = "SELECT * FROM missionlist WHERE user_id = " + id + " ORDER BY date DESC LIMIT 10;";
+
+				excuteQuery(query, function result(result){
+					data.last_missionList = result;
+					res.send(data);
+				});
+
 			});
-			res.send(result);
+
 		});
 	});
 

@@ -1,0 +1,51 @@
+<html>
+<head>
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+	<script>
+		$(document).ready(function(){
+		
+			for(var index=0; index<25000; index++){
+				var action = array[Math.floor( Math.random() * 6)];
+				var id = "rlacjftns5424";
+				var date = getFormatDate(randomDate(new Date(2019, 1, 1), new Date()));
+				var mysql = "INSERT INTO userlog value('" + id + "', '" + action + "','" + date + "');";
+				console.log("mysql : " , mysql);
+				$("#area").append("<p>" + mysql + "</p>");
+			}
+		
+		});
+		var array = ["LOGIN", "JOYSTICK", "SEQUENT_MOVE", "REPEAT_MOVE", "CODITION_MOVE","CODING"]
+		function randomDate(start, end) {
+		  return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+		}
+		
+		
+		function getFormatDate(date){
+		  var year = date.getFullYear();
+		  var month = (1 + date.getMonth());
+		  var day = date.getDate();
+		  var hour = date.getHours();
+		  var minute = date.getMinutes();
+		  var seconds = date.getSeconds();
+		  month = month >= 10 ? month : '0' + month;
+		  day = day >= 10 ? day : '0' + day;
+		  hour = hour >= 10 ? hour : '0' + hour;
+		  minute = minute >= 10 ? minute : '0' + minute;
+		  seconds = seconds >= 10 ? seconds : '0' + seconds;
+		  
+		  return  year + '-' + month + '-' + day + " " + hour + ":" + minute + ":" + seconds;
+		}
+		<!-- var mysql = "INSERT INTO userlog value('chldnjsrl',)" -->
+		<!-- console.log(getFormatDate(randomDate(new Date(2019, 1, 1), new Date()))); -->
+	
+	</script>
+</head>
+
+
+<body>
+	<div id="area">
+	
+	</div>
+</body>
+
+</html>

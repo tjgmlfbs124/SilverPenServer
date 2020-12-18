@@ -1,5 +1,3 @@
-# CodingGame Server
- asdf
 # 모바일 코딩게임 프로젝트
 [모바일코딩게임](https://github.com/TAThink/SilverPenApp)과 통신하는 서버
 ## 사업개요

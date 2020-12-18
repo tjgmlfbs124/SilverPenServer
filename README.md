@@ -4,7 +4,7 @@
 - 회원가입, 로그인, 활동로그 저장, 조회 등등의 코딩게임(클라이언트)에서 필요한 데이터를 저장
 
 ## 개발환경
-- Server : NodeJS
+- Server : NodeJS(Express Module)
 - Front-end : [Android](https://github.com/TAThink/SilverPenApp)
 - Back-end : NodeJS
 - Database : MySQL
